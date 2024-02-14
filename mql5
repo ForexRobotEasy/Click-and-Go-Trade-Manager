@@ -1,0 +1,112 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                                       Trade.mq5 |
+//|                       Copyright 2021, Forex Robot Easy Team      |
+//|                                            https://www.forexroboteasy.com |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|       Terms of Reference for Writing Code for Click and Go Trade Manager: |
+//|                                                                  |
+//| 1. Develop a seamless trading solution for Forex trading.         |
+//| 2. Implement a feature that allows traders to define stop loss,   |
+//|    entry price, and target levels with a simple click on the chart.|
+//| 3. Remove the need for manual inputting of values in the trading  |
+//|    process.                                                       |
+//| 4. Ensure the software is intuitive and straightforward to use    |
+//|    for both novice and experienced traders.                       |
+//| 5. Integrate risk management functionalities to assist traders in |
+//|    managing the inherent volatility of the Forex market.          |
+//| 6. Program the software to calculate and display risk management  |
+//|    parameters such as stop loss levels.                           |
+//| 7. Develop a comprehensive suite of features to simplify the      |
+//|    complex process of Forex trading.                              |
+//| 8. Ensure the software is compatible with various tools and       |
+//|    platforms commonly used in the trading world.                  |
+//| 9. Optimize the code for efficient trade execution and minimal    |
+//|    latency.                                                       |
+//| 10. Implement rigorous testing procedures to ensure the           |
+//|     reliability and accuracy of the trading software.             |
+//| 11. Provide clear documentation and instructions for traders to   |
+//|     understand and utilize the features effectively.              |
+//| 12. Develop the software using industry-standard coding practices |
+//|     and best practices for software development.                  |
+//| 13. Deliver the code within the specified timeframe and adhere to |
+//|     any additional project management guidelines provided.        |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                  Click and Go Trade Manager                        |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|              Global Variables                                     |
+//|                                                                  |
+//+------------------------------------------------------------------+
+double StopLoss;
+double EntryPrice;
+double TargetLevel;
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|              Event Handlers                                       |
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnChartClick(const int x, const int y, const int button, const int clicks, const int flags)
+{
+   if(clicks == 1 && button == MOUSE_LEFT_BUTTON)
+   {
+      EntryPrice = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+      StopLoss = EntryPrice - 0.0010; // Set stop loss 10 pips below entry price
+      TargetLevel = EntryPrice + 0.0020; // Set target level 20 pips above entry price
+      
+      // Display the calculated risk management parameters
+      Comment('Entry Price: ', DoubleToString(EntryPrice, _Digits), '\n',
+              'Stop Loss: ', DoubleToString(StopLoss, _Digits), '\n',
+              'Target Level: ', DoubleToString(TargetLevel, _Digits));
+   }
+}
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|              Initialization Function                             |
+//|                                                                  |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   // Enable chart click event
+   ChartSetInteger(0, CHART_EVENT_CLICK, true);
+   
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|              Deinitialization Function                           |
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Disable chart click event
+   ChartSetInteger(0, CHART_EVENT_CLICK, false);
+}
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|              Main Program                                         |
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnStart()
+{
+   // Main program loop
+   while(!IsStopped())
+   {
+      // Your trading logic here...
+   }
+}
+
